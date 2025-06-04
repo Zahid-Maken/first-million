@@ -62,12 +62,25 @@ export const transactions = pgTable("transactions", {
 export const investments = pgTable("investments", {
   id: serial("id").primaryKey(),
   userEmail: varchar("user_email").notNull(),
-  type: varchar("type", { enum: ["crypto", "stock", "business"] }).notNull(),
+  type: varchar("type", { enum: ["crypto", "stock"] }).notNull(),
   name: varchar("name").notNull(),
   symbol: varchar("symbol"),
   isManual: boolean("is_manual").default(true),
   currentValue: decimal("current_value", { precision: 10, scale: 2 }).notNull(),
   notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const businessInvestments = pgTable("business_investments", {
+  id: serial("id").primaryKey(),
+  userEmail: varchar("user_email").notNull(),
+  businessName: varchar("business_name").notNull(),
+  investmentAmount: decimal("investment_amount", { precision: 10, scale: 2 }).notNull(),
+  currentValue: decimal("current_value", { precision: 10, scale: 2 }).notNull(),
+  profitLoss: decimal("profit_loss", { precision: 10, scale: 2 }).default("0"),
+  description: text("description"),
+  businessType: varchar("business_type"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
