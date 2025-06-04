@@ -112,7 +112,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Desktop Sidebar */}
       <DesktopSidebar 
         activeTab={activeTab} 
@@ -127,17 +127,17 @@ export default function Dashboard() {
       />
 
       {/* Main Content */}
-      <div className="md:ml-64 pb-20 md:pb-0">
+      <div className="md:ml-72 pb-24 md:pb-0">
         {/* Mobile Header */}
-        <div className="md:hidden bg-white border-b border-gray-200 p-4 sticky top-0 z-40">
+        <div className="md:hidden bg-card/80 nav-blur border-b border-border p-4 sticky top-0 z-40">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-dark">First Million</h1>
-              <p className="text-gray-500 text-sm">
+              <h1 className="text-xl font-bold text-gradient-primary">First Million</h1>
+              <p className="text-muted-foreground text-sm font-medium">
                 Welcome back, {user?.firstName || user?.email?.split('@')[0] || "User"}
               </p>
             </div>
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow">
               <span className="text-white font-semibold">
                 {(user?.firstName || user?.email || "U")[0].toUpperCase()}
               </span>

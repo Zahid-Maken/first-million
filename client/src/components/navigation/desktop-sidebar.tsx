@@ -2,19 +2,20 @@ import { Button } from "@/components/ui/button";
 import { 
   Home, 
   ArrowRightLeft, 
-  LineChart, 
+  TrendingUp, 
   Target, 
   PieChart,
   Crown,
   LogOut,
-  Grid3X3
+  Grid3X3,
+  User
 } from "lucide-react";
-import type { User } from "@shared/schema";
+import type { User as UserType } from "@shared/schema";
 
 interface DesktopSidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  user: User;
+  user: UserType;
 }
 
 export default function DesktopSidebar({ activeTab, setActiveTab, user }: DesktopSidebarProps) {
@@ -22,78 +23,91 @@ export default function DesktopSidebar({ activeTab, setActiveTab, user }: Deskto
     { id: "dashboard", icon: Home, label: "Dashboard" },
     { id: "transactions", icon: ArrowRightLeft, label: "Transactions" },
     { id: "categories", icon: Grid3X3, label: "Categories" },
-    { id: "investments", icon: LineChart, label: "Investments" },
+    { id: "investments", icon: TrendingUp, label: "Investments" },
     { id: "goals", icon: Target, label: "Goals" },
     { id: "reports", icon: PieChart, label: "Reports" },
   ];
 
   return (
-    <div className="hidden md:flex md:fixed md:left-0 md:top-0 md:bottom-0 md:w-64 bg-dark text-white flex-col">
-      {/* Header */}
-      <div className="p-6 border-b border-dark-light">
-        <h1 className="text-2xl font-bold text-secondary">First Million</h1>
-        <p className="text-gray-400 text-sm mt-2">Your path to wealth</p>
-      </div>
-      
-      {/* Navigation */}
-      <nav className="flex-1 p-4">
-        <div className="space-y-2">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
-                  activeTab === item.id
-                    ? "bg-primary/20 text-primary"
-                    : "text-gray-300 hover:bg-dark-light"
-                }`}
-                onClick={() => setActiveTab(item.id)}
-              >
-                <Icon className="w-5 h-5 mr-3" />
-                {item.label}
-              </button>
-            );
-          })}
+    <div className="hidden md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 bg-card border-r border-border shadow-card">
+      <div className="flex flex-col flex-grow pt-6 pb-4 overflow-y-auto">
+        {/* Logo/Header */}
+        <div className="flex items-center flex-shrink-0 px-6 mb-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-glow">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gradient-primary">First Million</h1>
+              <p className="text-xs text-muted-foreground font-medium">Investment Tracker</p>
+            </div>
+          </div>
         </div>
-      </nav>
 
-      {/* User Section */}
-      <div className="p-4 border-t border-dark-light">
-        <div className="flex items-center mb-4">
-          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
-            <span className="text-white font-semibold">
-              {(user.firstName || user.email || "U")[0].toUpperCase()}
-            </span>
-          </div>
-          <div>
-            <p className="font-medium">
-              {user.firstName && user.lastName 
-                ? `${user.firstName} ${user.lastName}`
-                : user.firstName || user.email?.split('@')[0] || "User"
-              }
-            </p>
-            <p className="text-gray-400 text-sm">
-              {user.isProUser ? "Pro Member" : "Free Member"}
-            </p>
-          </div>
+        {/* Navigation */}
+        <div className="flex-grow flex flex-col px-4">
+          <nav className="flex-1 space-y-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  className={`group flex items-center px-4 py-3 text-sm font-semibold rounded-2xl w-full transition-all duration-300 ease-out relative ${
+                    isActive
+                      ? "bg-gradient-primary text-white shadow-glow transform scale-[1.02]"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                  onClick={() => setActiveTab(item.id)}
+                >
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-xl mr-3 transition-all duration-300 ${
+                    isActive 
+                      ? "bg-white/20" 
+                      : "bg-muted/30 group-hover:bg-muted/50"
+                  }`}>
+                    <Icon className={`w-5 h-5 transition-all duration-300 ${
+                      isActive ? "text-white" : "text-muted-foreground group-hover:text-foreground"
+                    }`} />
+                  </div>
+                  <span className="flex-1 text-left">{item.label}</span>
+                  
+                  {/* Active indicator */}
+                  {isActive && (
+                    <div className="absolute right-2 w-2 h-2 bg-white rounded-full" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
         </div>
-        
-        {!user.isProUser && (
-          <Button className="w-full bg-accent text-white mb-3 hover:bg-accent/90">
-            <Crown className="w-4 h-4 mr-2" />
-            Upgrade to Pro
-          </Button>
-        )}
-        
-        <Button 
-          variant="outline" 
-          className="w-full text-gray-300 border-gray-600 hover:bg-dark-light"
-          onClick={() => window.location.href = "/api/logout"}
-        >
-          <LogOut className="w-4 h-4 mr-2" />
-          Logout
-        </Button>
+
+        {/* User Profile */}
+        <div className="flex-shrink-0 border-t border-border p-4 mt-4">
+          <div className="flex items-center w-full p-3 rounded-2xl bg-muted/30 hover:bg-muted/50 transition-colors duration-200 mb-4">
+            <div className="flex items-center justify-center w-10 h-10 bg-gradient-primary rounded-xl shadow-sm">
+              <User className="w-5 h-5 text-white" />
+            </div>
+            <div className="ml-3 flex-1 min-w-0">
+              <p className="text-sm font-semibold text-foreground truncate">
+                {user.firstName || user.email?.split('@')[0] || 'User'}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+            </div>
+            <button 
+              className="ml-2 p-2 text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-muted/50"
+              onClick={() => window.location.href = "/api/logout"}
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+
+          {!user.isProUser && (
+            <Button className="w-full bg-gradient-warning text-white shadow-card hover:shadow-card-hover transition-all duration-300">
+              <Crown className="w-4 h-4 mr-2" />
+              Upgrade to Pro
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
