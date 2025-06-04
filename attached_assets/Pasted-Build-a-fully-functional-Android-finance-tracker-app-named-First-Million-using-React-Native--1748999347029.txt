@@ -1,0 +1,189 @@
+Build a fully functional Android finance tracker app named **"First Million"** using **React Native**. The app must have a modern UI, offline-first functionality, seamless cloud sync, robust category-based tracking, and onboarding designed to guide users toward wealth using the principle:
+
+**“Increase income, decrease expenses, and invest the gap.”**
+
+### 📱 Target Platform:
+- Android only
+- Built in React Native (bare workflow preferred for native modules)
+- English only
+
+---
+
+## 🛠️ Features and Architecture
+
+### 🔐 Authentication
+- Google Sign-In via subasbse
+- Email + password option (supabase base)
+- “Skip login” allowed for offline use
+- If user subscribes to **Pro**, force login to tie Pro status to user email
+- Save `is_pro_user = true` flag in Supabase
+- Use **email as the primary identifier** in all synced tables
+
+---
+
+### 🧱 Database Design
+
+Use **SQLite** for offline access and **Supabase** for cloud sync.
+
+#### 🔸 Tables (both locally and in Supabase)
+
+1. **users**
+   - `id`
+   - `email`
+   - `is_pro_user` (bool)
+   - `created_at`
+
+2. **categories**
+   - `id`
+   - `user_email`
+   - `type` ("income" | "expense")
+   - `name`
+   - `icon`
+   - `color`
+   - `created_at`
+
+3. **transactions**
+   - `id`
+   - `user_email`
+   - `category_id`
+   - `type` ("income" | "expense")
+   - `amount`
+   - `description`
+   - `date`
+
+4. **investments**
+   - `id`
+   - `user_email`
+   - `type` ("crypto" | "stock" | "business")
+   - `name`
+   - `symbol` (for API usage – optional)
+   - `is_manual` (bool)
+   - `value_history` (array of `{date, value}`)
+   - `notes`
+
+5. **goals**
+   - `id`
+   - `user_email`
+   - `category_id`
+   - `limit_amount`
+   - `alert_triggered` (bool)
+   - `created_at`
+
+---
+
+### 🌐 Sync System
+- Automatic sync when online & user is logged in
+- Background sync every few minutes or on user action
+- Sync SQLite ↔ Supabase using primary key `user_email`
+- Conflict resolution: local always wins unless timestamp on server is newer
+
+---
+
+## 🖼️ UI/UX Screens
+
+### 1. 🚀 Onboarding Screens
+- Educate the user about the main principle
+- Simple interactive tutorial: “Increase income, decrease expenses, and invest the gap”
+
+### 2. 👤 Login / Auth Screen
+- Google login
+- Email login
+- “Continue offline” option
+- If user purchases Pro, force login and store subscription under user email
+
+### 3. 🏠 Dashboard Screen
+- Net Worth Summary: Total Income – Expenses + Investment Net Worth
+- Visual Pie Chart of Expenses
+  - Tap color to reveal: expense name, amount, and % of total
+- Bar graph for "income vs expenses"
+- Line graph for investments (showing ROI trend)
+
+### 4. 💰 Transactions Screen
+- Tabs: Income | Expenses
+- List with category icon, description, amount
+- FAB (Floating Action Button) to add transaction
+- Add screen: select category, input amount, optional description, date
+
+### 5. 🗂️ Categories Screen
+- Add, Edit, Delete categories
+- Custom icon, name, color
+- Category change updates graphs dynamically
+- Deleting a category deletes its transactions
+
+### 6. 📉 Investments Screen
+- Add: type (stock/crypto/business)
+  - If stock/crypto: use symbol, fetch API data (e.g., CoinGecko or Alpha Vantage)
+  - If business: manual value inputs
+- Line chart with colored lines for each asset
+- Tap asset for details and update input
+
+### 7. 🎯 Goals Screen
+- Set spending goals per category
+- Visual progress bar with color-coded alerts
+- Device local notification when user hits/exceeds goal
+
+### 8. 📊 Reports Screen
+- Pie chart: expense categories
+- Bar chart: income vs expenses by month
+- Investment growth chart (line chart)
+- CSV export (Pro only)
+
+### 9. 🛒 Pro Features (Stripe or Google Play Billing)
+- Multiple color themes
+- Export to CSV
+- Passcode / biometric lock
+- Long-term charts (1 year+)
+- Widget (home screen add shortcut to add expenses)
+
+---
+
+## 📚 Logic Details
+
+### Startup Defaults:
+- On first app open: all totals = 0
+- No default categories; user must add them
+- Graphs are empty until user adds data
+
+### Chart Interactions:
+- Pie chart tap = show label + % of total
+- Investment chart tap = show asset value history
+- All graphs dynamically change when:
+  - Categories added/deleted
+  - Transactions added
+  - Values edited
+
+### Notifications:
+- Local notifications (not push)
+- For budget alerts & reminders
+
+### App State:
+- All data works fully offline
+- Online sync starts automatically if logged in
+- App detects connection + login state to sync
+
+---
+
+## 📦 Stack
+
+- **React Native (Bare)**
+- **Firebase Auth** (Google & Email)
+- **SQLite** (with offline-first support)
+- **Supabase** (Postgres sync and backend)
+- **Charting**: `react-native-chart-kit` or `Victory Native`
+- **Push/Local Notifications**: `react-native-push-notification`
+- **API**: CoinGecko / Alpha Vantage for asset data
+- **Billing**: Stripe or Google Play Billing for Pro
+
+---
+
+## 🎯 Final Deliverables:
+
+- Authentication logic
+- SQLite + Supabase sync code
+- All screens + reusable components
+- Category logic (add/edit/delete)
+- Investment module with graphing
+- Budget alert system + device notifications
+- Graphs and dashboards
+- All data models & variables wired offline and synced
+- Fully responsive UI (mobile-only)
