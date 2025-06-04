@@ -6,7 +6,8 @@ import {
   Target, 
   PieChart,
   Crown,
-  LogOut
+  LogOut,
+  Grid3X3
 } from "lucide-react";
 import type { User } from "@shared/schema";
 
@@ -20,6 +21,7 @@ export default function DesktopSidebar({ activeTab, setActiveTab, user }: Deskto
   const navItems = [
     { id: "dashboard", icon: Home, label: "Dashboard" },
     { id: "transactions", icon: ArrowRightLeft, label: "Transactions" },
+    { id: "categories", icon: Grid3X3, label: "Categories" },
     { id: "investments", icon: LineChart, label: "Investments" },
     { id: "goals", icon: Target, label: "Goals" },
     { id: "reports", icon: PieChart, label: "Reports" },

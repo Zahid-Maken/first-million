@@ -1,0 +1,101 @@
+Create a fully functional Android app using React Native with the following specifications:
+
+📱 App Name: "Lovable – Your First Million"
+
+🎯 Purpose:
+A financial behavior-changing app designed to help users become financially stable or rich through one guiding principle: “Increase income, decrease expenses, and invest the gap.”
+
+💡 Key Philosophy:
+This is more than just an expense tracker — it is a life financial coach built around habit transformation, analytics, and goal tracking.
+
+🔐 Auth:
+- Google Sign-In using Firebase Authentication
+
+🌐 Language: English only
+
+🎨 UI:
+- React Native with a modern, minimal, custom theme (rounded cards, smooth shadows, bright and soft color palette)
+- Tailwind-style styling (or similar utility-based CSS-in-JS)
+- Animated graphs and interactive components
+- Multiple tabs with bottom navigation
+
+🧱 App Architecture:
+- Offline-first using SQLite (e.g., with React Native SQLite or WatermelonDB)
+- Background Supabase sync (triggered when online)
+- Data models handled via Supabase schema + local SQLite mapping
+- Store data in local DB first, sync with Supabase in background
+
+🔄 Supabase Schema:
+- users (id, email, auth_provider, created_at)
+- categories (id, type: "income"|"expense", name, icon, user_id)
+- transactions (id, type: "income"|"expense", category_id, amount, date, note, user_id)
+- investments (id, type: "crypto"|"stock"|"local", name, user_input?:boolean, symbol?, value_history[], user_id)
+- goals (id, category_id, limit_amount, alert_triggered, user_id)
+- wallets (id, name, balance, type: "cash"|"bank"|"crypto", user_id)
+
+📊 Main Features:
+1. **Dashboard**
+   - Overview: Income, Expenses, Investments, Gap
+   - Visual bars and progress circle toward “First Million”
+   - Alerts and weekly insight cards
+
+2. **Expense & Income Tracker**
+   - Add/remove/edit transactions
+   - Dynamic pie chart that shrinks to show multiple categories
+   - Budget bar for each category (color-coded: green/yellow/red)
+
+3. **Investment Tracker**
+   - Add crypto/stock assets (fetch prices via CoinGecko/Alpha Vantage)
+   - Add local investments (manual input of profit over time)
+   - Line graph with multiple colors for different assets
+   - Individual asset detail pages with edit option and value history
+
+4. **Goal Tracker**
+   - Set goals per category
+   - Alert when close to limit
+   - Smart insights: e.g., “You’ve exceeded your coffee budget 3 months in a row”
+
+5. **Account Manager**
+   - Support multiple wallets (cash, card, crypto)
+   - Transfer between wallets
+   - Visual balance view per wallet
+
+6. **Category Manager**
+   - User can add/edit/delete categories for both income and expenses
+
+7. **Reports & Analysis**
+   - Monthly and long-term analysis (3-month, 6-month, 1-year)
+   - Export to CSV
+   - Smart tips (e.g., “Spend less on takeout, invest the difference”)
+
+8. **Widget**
+   - Simple home screen widget (quick add + current balance)
+
+🔐 Pro Features:
+- Theme switching
+- Passcode/biometric lock
+- Advanced widgets
+- Custom goals per asset
+- Historical trends across year
+- Optional Google Play Billing or Stripe subscriptions
+
+⚙️ Settings:
+- Currency symbol selection
+- Backup/restore local data
+- Manual Supabase sync button
+
+📦 Stack:
+- React Native (with Expo or bare workflow)
+- Firebase Auth (Google sign-in)
+- SQLite or WatermelonDB (offline-first)
+- Supabase (PostgreSQL backend and sync logic)
+- CoinGecko/Alpha Vantage APIs for price fetching
+- Stripe or Google Play Billing for Pro features
+
+Deliver:
+- Fully modular code with components for each page
+- Navigation using React Navigation (bottom tab + stack views)
+- Custom theme system
+- API integration handlers
+- Sync logic between local DB and Supabase
+- Working auth, transactions, investment charts, budget goals, and reports

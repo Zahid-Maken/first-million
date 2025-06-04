@@ -1,0 +1,103 @@
+Create a fully functional Android app using **React Native** with the following features and constraints:
+
+🟢 App Name: **First Million**
+
+🎯 Goal:
+A personal finance tracker focused on the philosophy:
+**"Increase income, decrease expenses, and invest the gap."**
+The app helps users reach financial stability or wealth by managing income, controlling spending, and tracking investments over time.
+
+🔐 Authentication:
+- Google Sign-In using Firebase Authentication
+
+📐 UI & UX:
+- Custom modern UI (use Tailwind-style or CSS-in-JS)
+- Beautiful rounded cards, soft shadows, gradient progress bars
+- Color-coded graphs, smooth animations, and bottom navigation
+- Light/dark theme switcher (Pro users only)
+
+🌐 Language: English only
+
+🔌 Offline-First:
+- Local storage via SQLite (or WatermelonDB)
+- All operations are local by default
+- Sync with **Supabase** when online (push/pull model)
+
+🧱 Data Model (Supabase Schema):
+- `users` (id, email, created_at)
+- `categories` (id, type: "income"|"expense", name, icon, user_id)
+- `transactions` (id, category_id, type: "income"|"expense", amount, date, description, user_id)
+- `investments` (id, name, type: "crypto"|"stock"|"local", symbol, value_history[], is_manual: boolean, user_id)
+- `goals` (id, category_id, limit_amount, alert_triggered, user_id)
+
+⚙️ App Logic:
+
+1. 🆕 **First Launch Behavior**:
+   - App initializes with zero values for all graphs
+   - No pre-filled categories or expenses
+   - User adds custom categories (income or expense)
+
+2. 🧩 **Category Manager**:
+   - Add/Edit/Delete categories (e.g., Food, Rent, Freelance)
+   - When a category is deleted, its associated transactions are also removed
+   - Pie chart and other graphs dynamically update when categories change
+
+3. 💸 **Expense & Income Tracker**:
+   - User selects a category, adds amount and optional description
+   - Pie chart visualizes expenses by category
+   - Bar graph shows budget vs actual per category
+   - Budget alerts: change color when user approaches/exceeds goal
+
+4. 💼 **Income Tracker**:
+   - Show total monthly income across categories
+   - Allow multiple income sources (Business, Job, etc.)
+   - Option to set income goals per category
+
+5. 📈 **Investment Tracker**:
+   - Add assets like Crypto (via CoinGecko), Stocks (via Alpha Vantage), or Local business (manual input)
+   - Track value changes over time (manual for local, API for crypto/stocks)
+   - Multi-line graph view with color-coded performance
+
+6. 🎯 **Goal Tracker**:
+   - Set monthly spending goals per category
+   - Trigger notifications/alerts as user approaches limit
+
+7. 📊 **Reports Page**:
+   - Graphs for past 3/6/12 months
+   - Download CSV report (optional)
+   - Savings tracker: shows “income – expenses” trend
+
+8. 🧱 **Architecture Notes**:
+   - Only one user/account per device (no multi-wallet system)
+   - Local SQLite mirrors Supabase schema
+   - Sync logic handles merging offline edits with server
+   - Export/import local backups (Pro feature)
+
+9. 💎 **Pro Features (via Stripe or Google Play Billing)**:
+   - Unlock themes
+   - Enable export as CSV
+   - Passcode/biometric lock
+   - Home screen widget
+   - Yearly trends graph
+
+📦 Stack:
+- React Native (bare or Expo)
+- Firebase Authentication (Google login only)
+- SQLite or WatermelonDB for offline storage
+- Supabase (PostgreSQL) for sync
+- CoinGecko / Alpha Vantage for asset prices
+- Stripe or Google Play Billing for subscriptions
+
+🛠️ Deliverables:
+- Modular React Native codebase with:
+   - Auth screen
+   - Dashboard with expense/income/investment overview
+   - Category manager
+   - Transaction page (add/edit/remove)
+   - Budget and goal tracker
+   - Investment screen (with charts)
+   - Reports page
+   - Sync logic for offline + Supabase
+   - Pro feature toggle system
+
+All graphs and analysis must reflect only user-created categories and dynamically adjust as categories or transactions are added/edited/removed.

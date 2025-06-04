@@ -134,12 +134,12 @@ export default function Dashboard() {
             <div>
               <h1 className="text-xl font-bold text-dark">First Million</h1>
               <p className="text-gray-500 text-sm">
-                Welcome back, {user.firstName || user.email?.split('@')[0]}
+                Welcome back, {user?.firstName || user?.email?.split('@')[0] || "User"}
               </p>
             </div>
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
               <span className="text-white font-semibold">
-                {(user.firstName || user.email || "U")[0].toUpperCase()}
+                {(user?.firstName || user?.email || "U")[0].toUpperCase()}
               </span>
             </div>
           </div>
@@ -535,6 +535,188 @@ export default function Dashboard() {
                   ))
                 )}
               </div>
+            </div>
+          </TabsContent>
+
+          {/* Categories Tab */}
+          <TabsContent value="categories" className="m-0 relative">
+            <div className="hidden md:block bg-white border-b border-gray-200 p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-dark">Categories</h1>
+                  <p className="text-gray-500 mt-1">Manage your income and expense categories</p>
+                </div>
+                <Button onClick={() => setShowAddCategory(true)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Category
+                </Button>
+              </div>
+            </div>
+
+            {/* Mobile FAB */}
+            <button
+              className="md:hidden fixed bottom-24 right-4 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center z-40 hover:bg-primary/90 transition-colors"
+              onClick={() => setShowAddCategory(true)}
+            >
+              <Plus className="w-6 h-6" />
+            </button>
+
+            <div className="p-4 md:p-6">
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 mb-6">
+                  <TabsTrigger value="all">All</TabsTrigger>
+                  <TabsTrigger value="income">Income</TabsTrigger>
+                  <TabsTrigger value="expense">Expenses</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="all" className="space-y-3">
+                  {categories.length === 0 ? (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <p className="text-gray-500 mb-4">No categories found. Create categories to organize your transactions.</p>
+                        <Button onClick={() => setShowAddCategory(true)}>
+                          Create Your First Category
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    categories.map((category) => (
+                      <Card key={category.id}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div 
+                                className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+                                style={{ backgroundColor: `${category.color}20` }}
+                              >
+                                <span style={{ color: category.color }} className="text-xl">
+                                  {category.icon === "fas fa-home" ? "🏠" :
+                                   category.icon === "fas fa-utensils" ? "🍽️" :
+                                   category.icon === "fas fa-car" ? "🚗" :
+                                   category.icon === "fas fa-gamepad" ? "🎮" :
+                                   category.icon === "fas fa-shopping-cart" ? "🛒" :
+                                   category.icon === "fas fa-heartbeat" ? "❤️" :
+                                   category.icon === "fas fa-graduation-cap" ? "🎓" :
+                                   category.icon === "fas fa-dollar-sign" ? "💰" :
+                                   category.icon === "fas fa-briefcase" ? "💼" :
+                                   category.icon === "fas fa-gift" ? "🎁" : "📝"}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="font-semibold">{category.name}</p>
+                                <p className="text-sm text-gray-500 capitalize">
+                                  {category.type} Category
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge 
+                                variant={category.type === "income" ? "default" : "secondary"}
+                                className={category.type === "income" ? "bg-secondary text-white" : "bg-red-100 text-red-700"}
+                              >
+                                {category.type}
+                              </Badge>
+                              <Button variant="ghost" size="sm">
+                                <Edit className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
+                </TabsContent>
+
+                <TabsContent value="income" className="space-y-3">
+                  {categories.filter(c => c.type === "income").length === 0 ? (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <p className="text-gray-500 mb-4">No income categories found</p>
+                        <Button onClick={() => setShowAddCategory(true)}>
+                          Add Income Category
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    categories.filter(c => c.type === "income").map((category) => (
+                      <Card key={category.id}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mr-4">
+                                <span className="text-xl">
+                                  {category.icon === "fas fa-home" ? "🏠" :
+                                   category.icon === "fas fa-utensils" ? "🍽️" :
+                                   category.icon === "fas fa-car" ? "🚗" :
+                                   category.icon === "fas fa-gamepad" ? "🎮" :
+                                   category.icon === "fas fa-shopping-cart" ? "🛒" :
+                                   category.icon === "fas fa-heartbeat" ? "❤️" :
+                                   category.icon === "fas fa-graduation-cap" ? "🎓" :
+                                   category.icon === "fas fa-dollar-sign" ? "💰" :
+                                   category.icon === "fas fa-briefcase" ? "💼" :
+                                   category.icon === "fas fa-gift" ? "🎁" : "📝"}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="font-semibold">{category.name}</p>
+                                <p className="text-sm text-gray-500">Income Category</p>
+                              </div>
+                            </div>
+                            <Button variant="ghost" size="sm">
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
+                </TabsContent>
+
+                <TabsContent value="expense" className="space-y-3">
+                  {categories.filter(c => c.type === "expense").length === 0 ? (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <p className="text-gray-500 mb-4">No expense categories found</p>
+                        <Button onClick={() => setShowAddCategory(true)}>
+                          Add Expense Category
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    categories.filter(c => c.type === "expense").map((category) => (
+                      <Card key={category.id}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                <span className="text-xl">
+                                  {category.icon === "fas fa-home" ? "🏠" :
+                                   category.icon === "fas fa-utensils" ? "🍽️" :
+                                   category.icon === "fas fa-car" ? "🚗" :
+                                   category.icon === "fas fa-gamepad" ? "🎮" :
+                                   category.icon === "fas fa-shopping-cart" ? "🛒" :
+                                   category.icon === "fas fa-heartbeat" ? "❤️" :
+                                   category.icon === "fas fa-graduation-cap" ? "🎓" :
+                                   category.icon === "fas fa-dollar-sign" ? "💰" :
+                                   category.icon === "fas fa-briefcase" ? "💼" :
+                                   category.icon === "fas fa-gift" ? "🎁" : "📝"}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="font-semibold">{category.name}</p>
+                                <p className="text-sm text-gray-500">Expense Category</p>
+                              </div>
+                            </div>
+                            <Button variant="ghost" size="sm">
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
+                </TabsContent>
+              </Tabs>
             </div>
           </TabsContent>
 
