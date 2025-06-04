@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 11% 98%; /* #F9FAFB */
+  --foreground: 210 40% 8%; /* #1F2937 */
+  --muted: 210 40% 94%; /* #F3F4F6 */
+  --muted-foreground: 210 11% 46%; /* #6B7280 */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 210 40% 8%; /* #1F2937 */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 210 40% 8%; /* #1F2937 */
+  --border: 210 40% 88%; /* #E5E7EB */
+  --input: 210 40% 88%; /* #E5E7EB */
+  --primary: 217 91% 54%; /* #2563EB */
+  --primary-foreground: 211 100% 99%; /* #DBEAFE */
+  --secondary: 142 76% 36%; /* #10B981 */
+  --secondary-foreground: 60 9.1% 97.8%; /* #F9FAFB */
+  --accent: 43 96% 56%; /* #F59E0B */
+  --accent-foreground: 24 9.8% 10%; /* #1F2937 */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 60 9.1% 97.8%; /* #F9FAFB */
+  --ring: 217 91% 54%; /* #2563EB */
+  --radius: 0.5rem;
+  
+  /* Custom colors */
+  --dark: 210 40% 15%; /* #1F2937 */
+  --dark-light: 210 29% 24%; /* #374151 */
+  --chart-1: 217 91% 54%; /* #2563EB */
+  --chart-2: 142 76% 36%; /* #10B981 */
+  --chart-3: 0 84% 60%; /* #EF4444 */
+  --chart-4: 43 96% 56%; /* #F59E0B */
+  --chart-5: 262 83% 58%; /* #8B5CF6 */
+}
+
+.dark {
+  --background: 210 40% 3%; /* #0F172A */
+  --foreground: 0 0% 98%; /* #F8FAFC */
+  --muted: 210 40% 10%; /* #1E293B */
+  --muted-foreground: 210 6% 64%; /* #94A3B8 */
+  --popover: 210 40% 3%; /* #0F172A */
+  --popover-foreground: 0 0% 98%; /* #F8FAFC */
+  --card: 210 40% 3%; /* #0F172A */
+  --card-foreground: 0 0% 98%; /* #F8FAFC */
+  --border: 210 40% 18%; /* #334155 */
+  --input: 210 40% 18%; /* #334155 */
+  --primary: 217 91% 54%; /* #2563EB */
+  --primary-foreground: 211 100% 99%; /* #DBEAFE */
+  --secondary: 142 76% 36%; /* #10B981 */
+  --secondary-foreground: 60 9.1% 97.8%; /* #F9FAFB */
+  --accent: 43 96% 56%; /* #F59E0B */
+  --accent-foreground: 24 9.8% 10%; /* #1F2937 */
+  --destructive: 0 62.8% 30.6%; /* #DC2626 */
+  --destructive-foreground: 0 0% 98%; /* #F8FAFC */
+  --ring: 217 91% 54%; /* #2563EB */
+  
+  /* Custom dark colors */
+  --dark: 210 40% 8%; /* #1E293B */
+  --dark-light: 210 40% 15%; /* #334155 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-dark {
+    color: hsl(var(--dark));
+  }
+  
+  .bg-dark {
+    background-color: hsl(var(--dark));
+  }
+  
+  .bg-dark-light {
+    background-color: hsl(var(--dark-light));
+  }
+  
+  .border-dark-light {
+    border-color: hsl(var(--dark-light));
+  }
+}
