@@ -149,13 +149,16 @@ export default function Dashboard() {
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="m-0">
             {/* Desktop Header */}
-            <div className="hidden md:block bg-white border-b border-gray-200 p-6">
+            <div className="hidden md:block bg-card border-b border-border p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl font-bold text-dark">Dashboard</h1>
-                  <p className="text-gray-500 mt-1">Your financial overview</p>
+                  <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+                  <p className="text-muted-foreground mt-1 font-medium">Your financial overview</p>
                 </div>
-                <Button onClick={() => setShowAddTransaction(true)}>
+                <Button 
+                  onClick={() => setShowAddTransaction(true)}
+                  className="bg-gradient-primary text-white shadow-glow hover:shadow-card-hover transition-all duration-300"
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Transaction
                 </Button>
@@ -164,24 +167,31 @@ export default function Dashboard() {
 
             <div className="p-4 md:p-6 space-y-6">
               {/* Net Worth Summary */}
-              <Card className="bg-gradient-to-r from-primary to-blue-600 text-white">
-                <CardContent className="p-6 md:p-8">
-                  <h2 className="text-lg font-medium mb-2">Net Worth</h2>
-                  <div className="text-3xl md:text-4xl font-bold mb-4">
+              <Card className="bg-gradient-primary text-white shadow-glow border-0 overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12" />
+                <CardContent className="p-6 md:p-8 relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-white/90">Total Net Worth</h2>
+                    <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-white" />
+                    </div>
+                  </div>
+                  <div className="text-4xl md:text-5xl font-bold mb-6 text-white">
                     ${netWorth.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <p className="text-blue-200">Income</p>
-                      <p className="font-semibold">${totalIncome.toLocaleString()}</p>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+                      <p className="text-white/70 text-sm font-medium">Income</p>
+                      <p className="font-bold text-lg text-white">${totalIncome.toLocaleString()}</p>
                     </div>
-                    <div>
-                      <p className="text-blue-200">Expenses</p>
-                      <p className="font-semibold">${totalExpenses.toLocaleString()}</p>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+                      <p className="text-white/70 text-sm font-medium">Expenses</p>
+                      <p className="font-bold text-lg text-white">${totalExpenses.toLocaleString()}</p>
                     </div>
-                    <div>
-                      <p className="text-blue-200">Investments</p>
-                      <p className="font-semibold">${totalInvestments.toLocaleString()}</p>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+                      <p className="text-white/70 text-sm font-medium">Investments</p>
+                      <p className="font-bold text-lg text-white">${totalInvestments.toLocaleString()}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -189,62 +199,122 @@ export default function Dashboard() {
 
               {/* Quick Actions */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Button
-                  variant="outline"
-                  className="h-auto p-4 flex flex-col items-center space-y-2"
-                  onClick={() => setShowAddTransaction(true)}
-                >
-                  <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-secondary" />
-                  </div>
-                  <div className="text-center">
-                    <p className="font-medium">Add Income</p>
-                    <p className="text-xs text-gray-500">Record income</p>
-                  </div>
-                </Button>
+                <Card className="border-0 shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer group"
+                      onClick={() => setShowAddTransaction(true)}>
+                  <CardContent className="p-6 text-center">
+                    <div className="w-14 h-14 bg-gradient-success rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-glow">
+                      <TrendingUp className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">Add Income</h3>
+                    <p className="text-sm text-muted-foreground">Record earnings</p>
+                  </CardContent>
+                </Card>
 
-                <Button
-                  variant="outline"
-                  className="h-auto p-4 flex flex-col items-center space-y-2"
-                  onClick={() => setShowAddTransaction(true)}
-                >
-                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                    <TrendingDown className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div className="text-center">
-                    <p className="font-medium">Add Expense</p>
-                    <p className="text-xs text-gray-500">Track spending</p>
-                  </div>
-                </Button>
+                <Card className="border-0 shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer group"
+                      onClick={() => setShowAddTransaction(true)}>
+                  <CardContent className="p-6 text-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-destructive to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-glow">
+                      <TrendingDown className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">Add Expense</h3>
+                    <p className="text-sm text-muted-foreground">Track spending</p>
+                  </CardContent>
+                </Card>
 
-                <Button
-                  variant="outline"
-                  className="h-auto p-4 flex flex-col items-center space-y-2"
-                  onClick={() => setShowAddInvestment(true)}
-                >
-                  <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                    <LineChart className="w-6 h-6 text-accent" />
-                  </div>
-                  <div className="text-center">
-                    <p className="font-medium">Invest</p>
-                    <p className="text-xs text-gray-500">Add investment</p>
-                  </div>
-                </Button>
+                <Card className="border-0 shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer group"
+                      onClick={() => setShowAddInvestment(true)}>
+                  <CardContent className="p-6 text-center">
+                    <div className="w-14 h-14 bg-gradient-warning rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-glow">
+                      <LineChart className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">Invest</h3>
+                    <p className="text-sm text-muted-foreground">Grow wealth</p>
+                  </CardContent>
+                </Card>
 
-                <Button
-                  variant="outline"
-                  className="h-auto p-4 flex flex-col items-center space-y-2"
-                  onClick={() => setShowAddGoal(true)}
-                >
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                    <Target className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <div className="text-center">
-                    <p className="font-medium">Set Goals</p>
-                    <p className="text-xs text-gray-500">Budget limits</p>
-                  </div>
-                </Button>
+                <Card className="border-0 shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer group"
+                      onClick={() => setShowAddGoal(true)}>
+                  <CardContent className="p-6 text-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-glow">
+                      <Target className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">Set Goals</h3>
+                    <p className="text-sm text-muted-foreground">Plan targets</p>
+                  </CardContent>
+                </Card>
               </div>
+
+              {/* Investment Gap Analysis */}
+              <Card className="border-0 shadow-card overflow-hidden">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-foreground">Investment Gap Analysis</h3>
+                    <div className="w-10 h-10 bg-gradient-primary rounded-2xl flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-white" />
+                    </div>
+                  </div>
+                  
+                  {goals.length === 0 ? (
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <Target className="w-8 h-8 text-muted-foreground" />
+                      </div>
+                      <p className="text-muted-foreground mb-4">Set investment goals to track your progress</p>
+                      <Button 
+                        onClick={() => setShowAddGoal(true)}
+                        className="bg-gradient-primary text-white shadow-glow"
+                      >
+                        Create Your First Goal
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {goals.map((goal) => {
+                        const progress = Math.min((totalInvestments / parseFloat(goal.targetAmount)) * 100, 100);
+                        const remaining = Math.max(parseFloat(goal.targetAmount) - totalInvestments, 0);
+                        const isCompleted = progress >= 100;
+                        
+                        return (
+                          <div key={goal.id} className="bg-muted/30 rounded-2xl p-5">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="font-semibold text-foreground">{goal.name}</h4>
+                              <Badge variant={isCompleted ? "default" : "secondary"} className="rounded-full">
+                                {isCompleted ? "Completed" : `${progress.toFixed(1)}%`}
+                              </Badge>
+                            </div>
+                            <div className="mb-3">
+                              <div className="flex justify-between text-sm mb-2">
+                                <span className="text-muted-foreground">Progress</span>
+                                <span className="text-foreground font-medium">
+                                  ${totalInvestments.toLocaleString()} / ${parseFloat(goal.targetAmount).toLocaleString()}
+                                </span>
+                              </div>
+                              <Progress 
+                                value={progress} 
+                                className="h-3 bg-muted"
+                              />
+                            </div>
+                            {!isCompleted && (
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-muted-foreground">
+                                  ${remaining.toLocaleString()} remaining
+                                </span>
+                                <Button 
+                                  size="sm" 
+                                  onClick={() => setShowAddInvestment(true)}
+                                  className="bg-gradient-primary text-white text-xs px-3 py-1 h-auto"
+                                >
+                                  Invest Now
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
               {/* Charts Section */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -256,52 +326,60 @@ export default function Dashboard() {
               <InvestmentChart investments={investments} />
 
               {/* Recent Transactions */}
-              <Card>
+              <Card className="border-0 shadow-card">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Recent Transactions</h3>
-                    <Button variant="ghost" size="sm" onClick={() => setActiveTab("transactions")}>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-foreground">Recent Activity</h3>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => setActiveTab("transactions")}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       View All
                     </Button>
                   </div>
                   
                   {recentTransactions.length === 0 ? (
-                    <div className="text-center py-8 text-gray-500">
-                      <p>No transactions yet. Add your first transaction to get started!</p>
+                    <div className="text-center py-12">
+                      <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <DollarSign className="w-8 h-8 text-muted-foreground" />
+                      </div>
+                      <p className="text-muted-foreground mb-4">No transactions yet. Start tracking your finances!</p>
                       <Button 
-                        className="mt-4" 
                         onClick={() => setShowAddTransaction(true)}
+                        className="bg-gradient-primary text-white shadow-glow"
                       >
-                        Add Transaction
+                        Add First Transaction
                       </Button>
                     </div>
                   ) : (
                     <div className="space-y-3">
                       {recentTransactions.map((transaction) => {
                         const category = categories.find(c => c.id === transaction.categoryId);
+                        const isIncome = transaction.type === "income";
                         return (
-                          <div key={transaction.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                          <div key={transaction.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl hover:bg-muted/50 transition-colors duration-200">
                             <div className="flex items-center">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
-                                transaction.type === "income" ? "bg-secondary/10" : "bg-red-100"
+                              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mr-4 ${
+                                isIncome 
+                                  ? "bg-gradient-success" 
+                                  : "bg-gradient-to-br from-destructive to-red-500"
                               }`}>
-                                <DollarSign className={`w-5 h-5 ${
-                                  transaction.type === "income" ? "text-secondary" : "text-red-600"
-                                }`} />
+                                <DollarSign className="w-6 h-6 text-white" />
                               </div>
                               <div>
-                                <p className="font-medium">{transaction.description || "Transaction"}</p>
-                                <p className="text-sm text-gray-500">{category?.name || transaction.type}</p>
+                                <p className="font-semibold text-foreground">{transaction.description || "Transaction"}</p>
+                                <p className="text-sm text-muted-foreground">{category?.name || transaction.type}</p>
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className={`font-semibold ${
-                                transaction.type === "income" ? "text-secondary" : "text-red-600"
+                              <p className={`font-bold text-lg ${
+                                isIncome ? "text-success" : "text-destructive"
                               }`}>
-                                {transaction.type === "income" ? "+" : "-"}
-                                ${parseFloat(transaction.amount).toLocaleString()}
+                                {isIncome ? "+" : "-"}${parseFloat(transaction.amount).toLocaleString()}
                               </p>
-                              <p className="text-sm text-gray-500">
+                              <p className="text-sm text-muted-foreground">
                                 {new Date(transaction.date).toLocaleDateString()}
                               </p>
                             </div>

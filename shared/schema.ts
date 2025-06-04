@@ -75,9 +75,11 @@ export const investments = pgTable("investments", {
 export const goals = pgTable("goals", {
   id: serial("id").primaryKey(),
   userEmail: varchar("user_email").notNull(),
+  name: varchar("name").notNull(),
+  targetAmount: decimal("target_amount", { precision: 10, scale: 2 }).notNull(),
   categoryId: serial("category_id").references(() => categories.id),
-  limitAmount: decimal("limit_amount", { precision: 10, scale: 2 }).notNull(),
-  alertTriggered: boolean("alert_triggered").default(false),
+  deadline: date("deadline"),
+  completed: boolean("completed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
